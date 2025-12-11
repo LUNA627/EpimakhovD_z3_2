@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Sign"
-    android:background="@drawable/back_sign_gray">
+    tools:context=".SignInActivity"
+    android:background="@drawable/fon_main">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -36,36 +36,26 @@
             android:layout_height="wrap_content"
             android:hint="Email"
             android:id="@+id/email"
-            android:textColor="@color/red"
-            android:textColorHighlight="@color/red"
-            android:textCursorDrawable="@drawable/cursor"
-            android:textColorHint="@color/hint"
-            />
+            android:textColor="@color/col_fon_btn"
+            android:textColorHint="@color/white" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
             android:id="@+id/password"
-            android:textColor="@color/hint"
-            android:textColorHint="@color/white"
-            />
+            android:textColor="@color/col_fon_btn"
+            android:textColorHint="@color/white"/>
         <Button
-            android:id="@+id/login"
+            android:id="@+id/login_enter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign in"
-            android:background="@drawable/btn_style"
+            android:background="@drawable/btn_enter_style"
             android:textAllCaps="false"
             android:gravity="center"
             android:padding="10dp"
-            android:onClick="Login"
             android:textSize="24sp"
             android:textStyle="bold"/>
     </LinearLayout>
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

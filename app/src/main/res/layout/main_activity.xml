@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/blue"
+    android:background="@color/white"
     android:gravity="center_horizontal">
     <ImageView
         android:layout_width="300dp"

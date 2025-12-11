@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#FC6E51</color>
+    <color name="hint">#8A8A8A</color>
+    <color name="gray">#828282</color>
+    <color name="yellow">#FFCE54</color>
+    <color name="col_fon_back_sign">#aa96da</color>
+    <color name="col_fon_btn">#fc5692</color>
+</resources>
