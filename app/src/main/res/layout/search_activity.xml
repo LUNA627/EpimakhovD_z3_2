@@ -8,6 +8,13 @@
     tools:context=".SearchActivity"
     android:background="@color/col_fon_back_sign">
 
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"

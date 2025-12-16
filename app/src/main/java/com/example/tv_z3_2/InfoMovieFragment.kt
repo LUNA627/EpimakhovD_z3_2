@@ -1,9 +1,11 @@
 package com.example.tv_z3_2
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -18,6 +20,10 @@ class InfoMovieFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.info_movie_fragment, container, false)
 
+        val backButton: Button = view.findViewById(R.id.back_button)
+        backButton.setOnClickListener { clickedView ->
+            requireActivity().onBackPressed()
+        }
         val title = arguments?.getString("title") ?: ""
         val poster = arguments?.getString("poster") ?: ""
         val genreList = arguments?.getStringArrayList("genres") ?: arrayListOf()
@@ -42,5 +48,8 @@ class InfoMovieFragment : Fragment() {
         plotText.text = "Описание: $plot"
 
         return view
+
+
+
     }
 }

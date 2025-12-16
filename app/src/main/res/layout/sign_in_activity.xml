@@ -50,7 +50,7 @@
             android:id="@+id/login_enter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign in"
+            android:text="Войти"
             android:background="@drawable/btn_enter_style"
             android:textAllCaps="false"
             android:gravity="center"

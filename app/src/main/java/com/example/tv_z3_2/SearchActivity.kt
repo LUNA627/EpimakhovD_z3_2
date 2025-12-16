@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -15,7 +16,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
-class SearchActivity : Activity() {
+class SearchActivity : AppCompatActivity() {
 
     private val apiKey = "900abc80"
     private lateinit var recyclerView: RecyclerView
@@ -167,18 +168,27 @@ class SearchActivity : Activity() {
     }
 
     private fun openMovieDetails(movie: Movie) {
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(movie.Title)
-            .setMessage("""
-            Год: ${movie.Year}
-            Длительность: ${movie.Runtime}
-            Жанры: ${movie.Genre.joinToString(", ")}
-            Описание: ${movie.Plot}
-        """.trimIndent())
-            .setPositiveButton("OK", null)
-            .create()
+        val fragment = InfoMovieFragment().apply {
+            arguments = Bundle().apply {
+                putString("title", movie.Title)
+                putString("poster", movie.Poster)
+                putStringArrayList("genres", ArrayList(movie.Genre))
+                putString("plot", movie.Plot)
+                putString("year", movie.Year)
+                putString("runtime", movie.Runtime)
+            }
+        }
 
-        dialog.show()
+        // Скрываем RecyclerView и SearchView, показываем контейнер
+        findViewById<View>(R.id.recycler)?.visibility = View.GONE
+        findViewById<View>(R.id.search)?.visibility = View.GONE
+        findViewById<View>(R.id.fragment_container)?.visibility = View.VISIBLE
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null) // чтобы можно было вернуться назад
+            .commit()
     }
+
 
 }

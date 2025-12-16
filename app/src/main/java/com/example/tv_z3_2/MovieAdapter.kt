@@ -32,7 +32,7 @@ class MovieAdapter(private val onItemClick: (Movie) -> Unit):
             .into(holder.moviePoster)
 
         holder.movieName.text = movie.Title
-        holder.movieMore.text = "Подробнее"
+        holder.movieMore.text = "Детали"
 
         holder.movieGenres.text = "Жанры: " + movie.Genre.joinToString(", ")
         holder.movieMore.setOnClickListener {
