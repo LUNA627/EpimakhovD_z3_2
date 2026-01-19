@@ -5,10 +5,13 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -18,6 +21,7 @@ import org.json.JSONObject
 
 class SearchActivity : AppCompatActivity() {
 
+    private lateinit var genreButtonsContainer: LinearLayout
     private val apiKey = "900abc80"
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
@@ -34,6 +38,8 @@ class SearchActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler)
         searchView = findViewById(R.id.search)
         progressBar = findViewById(R.id.progress)
+
+        genreButtonsContainer = findViewById(R.id.genreButtonsContainer)
 
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         adapter = MovieAdapter { movie ->
@@ -96,7 +102,10 @@ class SearchActivity : AppCompatActivity() {
                                         allMovies.clear()
                                         allMovies.addAll(tempMovies)
                                         adapter.data = tempMovies
+
+                                        setupGenreButtons()
                                         progressBar.visibility = View.GONE
+
                                     }
                                 }
                             }
@@ -179,16 +188,67 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        // Скрываем RecyclerView и SearchView, показываем контейнер
+
         findViewById<View>(R.id.recycler)?.visibility = View.GONE
         findViewById<View>(R.id.search)?.visibility = View.GONE
         findViewById<View>(R.id.fragment_container)?.visibility = View.VISIBLE
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null) // чтобы можно было вернуться назад
+            .addToBackStack(null)
             .commit()
     }
 
+    private fun setupGenreButtons() {
+        genreButtonsContainer.removeAllViews()
 
+        // Добавляем кнопку "Все"
+        val allButton = Button(this).apply {
+            text = "Все"
+            setPadding(32, 16, 32, 16)
+            background = ContextCompat.getDrawable(this@SearchActivity, R.drawable.btn_enter_style)
+            textSize = 14f
+            setOnClickListener {
+                adapter.data = allMovies
+            }
+        }
+        genreButtonsContainer.addView(allButton)
+
+        val horizontalMargin = resources.getDimensionPixelSize(R.dimen.medium_margin)
+
+        // Собираем уникальные жанры
+        val uniqueGenres = mutableSetOf<String>()
+        for (movie in allMovies) {
+            for (genre in movie.Genre) {
+                if (genre != "N/A" && genre != "Не указано") {
+                    uniqueGenres.add(genre)
+                }
+            }
+        }
+
+        // Создаём кнопки для каждого жанра
+        for (genre in uniqueGenres) {
+            val button = Button(this).apply {
+                text = genre
+                setPadding(32, 16, 32, 16)
+
+                background = ContextCompat.getDrawable(this@SearchActivity, R.drawable.btn_enter_style)
+                textSize = 14f
+                setOnClickListener {
+                    val filtered = allMovies.filter { it.Genre.contains(genre) }
+                    adapter.data = filtered
+                }
+            }
+
+            val layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                rightMargin = horizontalMargin
+            }
+            button.layoutParams = layoutParams
+
+            genreButtonsContainer.addView(button)
+        }
+    }
 }
